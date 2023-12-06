@@ -10,9 +10,9 @@ class CommandPublisher(Node):
     def __init__(self, command):
         super().__init__('command_publisher')
         self.command = json.dumps(command)
-        self.publisher_ = self.create_publisher(String, 'command', 10)
+        self.publisher_ = self.create_publisher(String, '/command', 10)
         timer_period = 0.5  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
+        #self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
 
     def timer_callback(self):
@@ -22,13 +22,24 @@ class CommandPublisher(Node):
         self.get_logger().info('Publishing: "%s"' % msg.data)
         self.i += 1
 
+    def publish_command(self, command):
+        msg = String()
+        msg.data = command
+        self.publisher_.publish(msg)
+        self.i += 1
+
 
 def main(args=None):
     rclpy.init(args=args)
 
-    minimal_publisher = CommandPublisher()
+    minimal_publisher = CommandPublisher("pembis")
 
-    rclpy.spin(minimal_publisher)
+    try:
+        while True:
+            command = input("give a command: ")
+            minimal_publisher.publish_command(command)
+    except KeyboardInterrupt:
+        pass
 
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
