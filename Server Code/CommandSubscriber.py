@@ -5,7 +5,7 @@ from cv_bridge import CvBridge
 import cv2
 import time
 
-class ImageSubscriber(Node):
+class CommandSubscriber(Node):
     def __init__(self):
         super().__init__('command_listener')
         self.subscription = self.create_subscription(
@@ -22,7 +22,7 @@ class ImageSubscriber(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    image_saver = ImageSubscriber()
+    image_saver = CommandSubscriber()
 
     rclpy.spin(image_saver)
 
