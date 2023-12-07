@@ -12,7 +12,8 @@ def yoloView(frame):
         return items
     for i in range(len(results[0].boxes.cls)):
         items.append(getPos(results[0], i))
-        
+
+    
     return items
 
 def getPos(result, index):
@@ -21,13 +22,19 @@ def getPos(result, index):
     w = result.boxes.xywhn[index][2].item()
     h = result.boxes.xywhn[index][3].item()
     if(result.boxes.cls[index].item() == 0):
-        return {'size': max(w, h), 'x': x, 'y': y, 'type': 'blueBall'}
+        return {'distance': BLUEBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'blueBall'}
     if(result.boxes.cls[index].item() == 1):
-        return {'size': w, 'x': x, 'y': y, 'type': 'chessBoard'}
+        return {'distance': CHESSBOARD_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'chessBoard'}
     if(result.boxes.cls[index].item() == 2):
-        return {'size': max(w, h), 'x': x, 'y': y, 'type': 'yellowBall'}
+        return {'distance': YELLOWBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'yellowBall'}
     else:
-        return {'size': -1, 'x': -1, 'y': -1, 'type': 'none'}
+        return {'distance': -1, 'x': -1, 'y': -1, 'type': 'none'}
+
+def x_angle(x):
+    return (x-0.5)*Horizontal_FOV
+
+def y_angle(y):
+    return (y-0.5)*Vertical_FOV
         
 '''
 # Open the webcam
