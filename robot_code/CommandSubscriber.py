@@ -28,7 +28,7 @@ class CommandSubscriber(Node):
             self.car.control_car(0, 0)
         elif command['command'] == 'drive':
             self.car.control_car(100, 100)
-            time.sleep(command['amount']
+            time.sleep(command['amount'])
             self.car.control_car(0, 0)
         elif command['command'] == 'search':
             self.car.set_servo(1, 180)
