@@ -43,13 +43,14 @@ def x_angle(x):
 def y_angle(y):
     return (y-0.5)*Vertical_FOV
 
-#im_cv = cv2.imread("meter.png")
-#im_rgb = cv2.cvtColor(im_cv, cv2.COLOR_BGR2RGB)
-#scale_info = yoloView(im_rgb)
-scale_info = yoloView("y.jpg")
 
-for item in scale_info:
-    print(item)
+if __name__ == "__main__":
+    #im_cv = cv2.imread("meter.png")
+    #im_rgb = cv2.cvtColor(im_cv, cv2.COLOR_BGR2RGB)
+    #scale_info = yoloView(im_rgb)
+    scale_info = yoloView("y.jpg")
+    for item in scale_info:
+        print(item)
 
 
 '''
