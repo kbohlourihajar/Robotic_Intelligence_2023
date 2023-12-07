@@ -2,7 +2,14 @@ from ultralytics import YOLO
 import cv2
 import time
 
-model = YOLO("best.onnx")
+Horizontal_FOV = 52.8844060937 #degrees (0.9230070092945282) Radidans
+Vertical_FOV = 41.2941180858 #degrees (0.7207183223027605) Radians
+CHESSBOARD_METER = 0.18050996959209442
+BLUEBALL_METER = 0.08107323944568634
+YELLOWBALL_METER = 0.08612402528524399
+
+
+model = YOLO("C:/Users/kpche/OneDrive/Desktop/cs5510/runs/detect/train8/weights/best.onnx")
 
 def yoloView(frame):
     items = []
@@ -12,47 +19,47 @@ def yoloView(frame):
         return items
     for i in range(len(results[0].boxes.cls)):
         items.append(getPos(results[0], i))
+
+
     return items
 
 def getPos(result, index):
-    x = result.boxes.xywh[index][0].item()
-    y = result.boxes.xywh[index][1].item()
-    w = result.boxes.xywh[index][2].item()
-    h = result.boxes.xywh[index][3].item()
+    x = result.boxes.xywhn[index][0].item()
+    y = result.boxes.xywhn[index][1].item()
+    w = result.boxes.xywhn[index][2].item()
+    h = result.boxes.xywhn[index][3].item()
     if(result.boxes.cls[index].item() == 0):
-        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'blueBall'}
+        return {'distance': BLUEBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'blueBall'}
     if(result.boxes.cls[index].item() == 1):
-        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'chessBoard'}
+        return {'distance': CHESSBOARD_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'chessBoard'}
     if(result.boxes.cls[index].item() == 2):
-        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'yellowBall'}
+        return {'distance': YELLOWBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'yellowBall'}
     else:
-        return {'size': -1, 'x': -1, 'y': -1, 'type': 'none'}
-        
+        return {'distance': -1, 'x': -1, 'y': -1, 'type': 'none'}
+
+def x_angle(x):
+    return (x-0.5)*Horizontal_FOV
+
+def y_angle(y):
+    return (y-0.5)*Vertical_FOV
+
+
+if __name__ == "__main__":
+    #im_cv = cv2.imread("meter.png")
+    #im_rgb = cv2.cvtColor(im_cv, cv2.COLOR_BGR2RGB)
+    #scale_info = yoloView(im_rgb)
+    scale_info = yoloView("y.jpg")
+    for item in scale_info:
+        print(item)
+
+
 '''
-# Open the webcam
-cap = cv2.VideoCapture(0)
-
-while True:
-
-    # Read a frame from the webcam
-    ret, frame = cap.read()
-    if not ret:
-        break
-    # Predict using the YOLO model
-    results = model.predict(frame)
-
-    for result in results:
-        print(type(result.boxes.cls))
-        print(result.boxes.xywh)
-
-    time.sleep(1)
-    # Break the loop if 'q' is pressed
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# Release the webcam and destroy all windows
-cap.release()
-cv2.destroyAllWindows()
+  X-------->
+Y    
+|
+|
+|
+V
 '''
 
 '''
@@ -60,5 +67,7 @@ cv2.destroyAllWindows()
 results = model.predict('y.jpg')
 for result in results:
     print(result.boxes.cls[0].item())
-    print(result.boxes.xywh[0][0].item())
+    print(result.boxes.xywh[0][1].item())
+    print(result.boxes.cls)
+    print(result.boxes.xywh)
 '''
