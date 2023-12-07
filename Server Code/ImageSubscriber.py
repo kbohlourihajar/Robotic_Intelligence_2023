@@ -36,10 +36,11 @@ class ImageSubscriber(Node):
                 print(type(result.boxes.cls))
                 print(result.boxes.xywh)
 
-    # waits the input time or until a callback is triggered and returns the latest yolo results
-    def process_latest_img(self, time=1):
-        rclpy.spin_once(self, timeout_sec=time)
-        return self.results
+    # waits the input time or until a callback is triggered and returns the latest yolo results	
+    def process_latest_img(self, time=1):	
+        rclpy.spin_once(self, timeout_sec=time)	
+        return self.results	
+
 
 def main(args=None):
     rclpy.init(args=args)

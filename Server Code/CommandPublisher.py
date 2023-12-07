@@ -7,9 +7,8 @@ from std_msgs.msg import String
 
 class CommandPublisher(Node):
 
-    def __init__(self, command):
+    def __init__(self):
         super().__init__('command_publisher')
-        self.command = json.dumps(command)
         self.publisher_ = self.create_publisher(String, '/command', 10)
         timer_period = 0.5  # seconds
         #self.timer = self.create_timer(timer_period, self.timer_callback)
@@ -32,7 +31,7 @@ class CommandPublisher(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    minimal_publisher = CommandPublisher("pembis")
+    minimal_publisher = CommandPublisher()
 
     try:
         while True:
