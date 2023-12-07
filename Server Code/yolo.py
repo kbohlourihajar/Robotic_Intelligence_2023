@@ -12,19 +12,20 @@ def yoloView(frame):
         return items
     for i in range(len(results[0].boxes.cls)):
         items.append(getPos(results[0], i))
+        
     return items
 
 def getPos(result, index):
-    x = result.boxes.xywh[index][0].item()
-    y = result.boxes.xywh[index][1].item()
-    w = result.boxes.xywh[index][2].item()
-    h = result.boxes.xywh[index][3].item()
+    x = result.boxes.xywhn[index][0].item()
+    y = result.boxes.xywhn[index][1].item()
+    w = result.boxes.xywhn[index][2].item()
+    h = result.boxes.xywhn[index][3].item()
     if(result.boxes.cls[index].item() == 0):
-        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'blueBall'}
+        return {'size': max(w, h), 'x': x, 'y': y, 'type': 'blueBall'}
     if(result.boxes.cls[index].item() == 1):
-        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'chessBoard'}
+        return {'size': w, 'x': x, 'y': y, 'type': 'chessBoard'}
     if(result.boxes.cls[index].item() == 2):
-        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'yellowBall'}
+        return {'size': max(w, h), 'x': x, 'y': y, 'type': 'yellowBall'}
     else:
         return {'size': -1, 'x': -1, 'y': -1, 'type': 'none'}
         
