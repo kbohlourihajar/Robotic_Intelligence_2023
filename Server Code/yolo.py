@@ -7,26 +7,26 @@ model = YOLO("best.onnx")
 def yoloView(frame):
     items = []
     results = model.predict(frame)
-    if not results: # check if nothing is seen
+
+    if not results:
         return items
-    for result in results: #loop through every seen item
-        items.append(getPos(result))
-    
+    for i in range(len(results[0].boxes.cls)):
+        items.append(getPos(results[0], i))
     return items
 
-def getPos(result)
-    x = result.boxes.xywh[0][0].item()
-    y = result.boxes.xywh[0][1].item()
-    w = result.boxes.xywh[0][2].item()
-    h = result.boxes.xywh[0][3].item()
-    if(print(result.boxes.cls[0].item()) = 0):
-        return {'size': (w+h)/2 'x': x+w/2, 'y': y+h/2, 'type': 'blueBall'}
-    if(print(result.boxes.cls[1].item()) = 0):
-        return {'size': (w+h)/2 'x': x+w/2, 'y': y+h/2, 'type': 'chessBoard'}
-    if(print(result.boxes.cls[2].item()) = 0):
-        return {'size': (w+h)/2 'x': x+w/2, 'y': y+h/2, 'type': 'yellowBall'}
+def getPos(result, index):
+    x = result.boxes.xywh[index][0].item()
+    y = result.boxes.xywh[index][1].item()
+    w = result.boxes.xywh[index][2].item()
+    h = result.boxes.xywh[index][3].item()
+    if(result.boxes.cls[index].item() == 0):
+        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'blueBall'}
+    if(result.boxes.cls[index].item() == 1):
+        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'chessBoard'}
+    if(result.boxes.cls[index].item() == 2):
+        return {'size': (w+h)/2, 'x': x+w/2, 'y': y+h/2, 'type': 'yellowBall'}
     else:
-        return {'size': -1 'x': -1, 'y': -1, 'type': 'none'}
+        return {'size': -1, 'x': -1, 'y': -1, 'type': 'none'}
         
 '''
 # Open the webcam
