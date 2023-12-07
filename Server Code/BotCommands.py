@@ -25,11 +25,6 @@ class BotCommands:
         self.ultrasonicNode = USSubscriber.USSubscriber()
         self.stateNode = StateSubscriber.StateSubscriber()
 
-    # unimplemented things
-    def getPics(self):
-        # figure out how to aquire pics for yolo
-        return
-
 
 
 
@@ -48,6 +43,7 @@ class BotCommands:
     # possibly finished things
     def checkYOLOandUltrasonic(self):
         # {'distance': BLUEBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'blueBall'}
+        
 
         posDict = {
             'ball' : None,
@@ -65,12 +61,17 @@ class BotCommands:
                 'distance' : 0,
                 'angle' : 0
             }
-        
-        pictures = self.getPics()
-        
+
+
+        print('reply recieved, evaluating data')
         angleMod = -36
-        for pic in pictures:
-            listOfItems = yolo.yoloView(pic)
+        for i in range(3):
+            self.sendMessage({
+                'command' : 'search',
+                'angle' : 180 + angleMod
+            })
+        
+            listOfItems = self.imageNode.process_latest_img()
 
             for i in listOfItems:
                 if i['type'] == 'blueBall':
@@ -120,15 +121,7 @@ class BotCommands:
 
     def search(self):
         print('commanding robot to search, waiting for reply')
-        reply = self.sendMessage({
-            'command' : 'search'
-        })
-        if len(os.listdir('./imgBuffer')) >= 3:
-            print('reply recieved, evaluating data')
-            locations = self.checkYOLOandUltrasonic(reply)
-            print('data processed')
-            for i in os.listdir('./imgBuffer'):
-                os.remove(i)
-        else:
-            raise Exception('image buffer chcked, but returned empty')
+        locations = self.checkYOLOandUltrasonic()
+        print('data processed')
+
         return locations
