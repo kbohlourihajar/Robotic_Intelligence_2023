@@ -28,9 +28,11 @@ class CommandSubscriber(Node):
             self.car.control_car(0, 0)
         elif command['command'] == 'drive':
             self.car.control_car(100, 100)
-            time.sleep(command['amount']
+            time.sleep(command['amount'])
             self.car.control_car(0, 0)
         elif command['command'] == 'search':
+            # this part either needs an image pub/sub intermediary on the robot
+                # or another way to tell the server to take the results from yolo
             self.car.set_servo(1, 180)
             self.car.set_servo(2, 90)
             time.sleep(0.5)
