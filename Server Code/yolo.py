@@ -2,7 +2,14 @@ from ultralytics import YOLO
 import cv2
 import time
 
-model = YOLO("best.onnx")
+Horizontal_FOV = 52.8844060937 #degrees (0.9230070092945282) Radidans
+Vertical_FOV = 41.2941180858 #degrees (0.7207183223027605) Radians
+CHESSBOARD_METER = 0.18050996959209442
+BLUEBALL_METER = 0.08107323944568634
+YELLOWBALL_METER = 0.08612402528524399
+
+
+model = YOLO("C:/Users/kpche/OneDrive/Desktop/cs5510/runs/detect/train8/weights/best.onnx")
 
 def yoloView(frame):
     items = []
@@ -13,7 +20,7 @@ def yoloView(frame):
     for i in range(len(results[0].boxes.cls)):
         items.append(getPos(results[0], i))
 
-    
+
     return items
 
 def getPos(result, index):
@@ -35,32 +42,23 @@ def x_angle(x):
 
 def y_angle(y):
     return (y-0.5)*Vertical_FOV
-        
+
+#im_cv = cv2.imread("meter.png")
+#im_rgb = cv2.cvtColor(im_cv, cv2.COLOR_BGR2RGB)
+#scale_info = yoloView(im_rgb)
+scale_info = yoloView("y.jpg")
+
+for item in scale_info:
+    print(item)
+
+
 '''
-# Open the webcam
-cap = cv2.VideoCapture(0)
-
-while True:
-
-    # Read a frame from the webcam
-    ret, frame = cap.read()
-    if not ret:
-        break
-    # Predict using the YOLO model
-    results = model.predict(frame)
-
-    for result in results:
-        print(type(result.boxes.cls))
-        print(result.boxes.xywh)
-
-    time.sleep(1)
-    # Break the loop if 'q' is pressed
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# Release the webcam and destroy all windows
-cap.release()
-cv2.destroyAllWindows()
+  X-------->
+Y    
+|
+|
+|
+V
 '''
 
 '''
@@ -68,5 +66,7 @@ cv2.destroyAllWindows()
 results = model.predict('y.jpg')
 for result in results:
     print(result.boxes.cls[0].item())
-    print(result.boxes.xywh[0][0].item())
+    print(result.boxes.xywh[0][1].item())
+    print(result.boxes.cls)
+    print(result.boxes.xywh)
 '''
