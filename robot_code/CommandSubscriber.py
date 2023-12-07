@@ -33,19 +33,8 @@ class CommandSubscriber(Node):
         elif command['command'] == 'search':
             # this part either needs an image pub/sub intermediary on the robot
                 # or another way to tell the server to take the results from yolo
-            self.car.set_servo(1, 180)
-            self.car.set_servo(2, 90)
-            time.sleep(0.5)
-            self.car.set_servo(1, 144)
-            time.sleep(0.5)
-            self.car.set_servo(1, 108)
-            time.sleep(0.5)
-            self.car.set_servo(1, 72)
-            time.sleep(0.5)
-            self.car.set_servo(1, 36)
-            time.sleep(0.5)
-            self.car.set_servo(1, 0)
-            time.sleep(0.5)
+            self.car.set_servo(1, command['angle'])
+            self.car.set_servo(2, 100)
         elif command['command'] == 'ready':
             self.get_logger().info("My body is ready.")
 

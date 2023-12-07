@@ -6,6 +6,7 @@ bot_commands = BotCommands()
 bot_commands.sendMessage()
 
 def main(args=None):
+    rclpy.init(args=args)
     # start up the following nodes
         # Server:
             # CommandPublisher
@@ -19,38 +20,41 @@ def main(args=None):
             # 
             
     # process for moving one ball to the goal
-        # loop until the robot is pointed at the ball
-            # tell the robot to scan for the ball
-            # calculate the angle of the ball relative to the robot
-            # tell the robot to rotate to face the ball
 
-        # loop until the ultrasonic sensor indicates that the ball is in the catcher
-            # tell the robot to scan for the ball
-            # calculate the distance to the ball
-            # tell the robot to drive forward that distance
-        
-        # loop until the robot is pointed at the goal
-            # tell the robot to scan for the goal
-            # calculate the angle of the goal relative to the robot
-            # tell the robot to rotate to face the goal
-        
-        # loop until the robot is close enough to the goal
-            # tell the robot to scan for the goal
-            # calculate the distance to the goal
-            # tell the robot to drive forward that distance
-        
-        # tell the robot to back up and turn around (set up to perform the ball process again)
+    # rotate towards ball
+    ball_angle = bot_commands.checkYOLOandUltrasonic()['ball']['angle']
+    angle_margin = 2
+    forward_angle = 90 # 90 is the forward angle of the camera servo
+    while forward_angle - angle_margin < ball_angle < forward_angle + angle_margin:
+        ball_angle = bot_commands.checkYOLOandUltrasonic()['ball']['angle']
+        bot_commands.rotateBot(ball_angle)
 
-    rclpy.init(args=args)
+    # move to ball
+    ball_distance = bot_commands.checkYOLOandUltrasonic()['ball']['distance']
+    dist_threshold = 5
+    while ball_distance < dist_threshold:
+        ball_distance = bot_commands.checkYOLOandUltrasonic()['ball']['distance']
+        bot_commands.driveBot(ball_distance)
+    
+    # rotate to goal
+    goal_angle = bot_commands.checkYOLOandUltrasonic()['goal']['angle']
+    angle_margin = 2
+    forward_angle = 90 # 90 is the forward angle of the camera servo
+    while forward_angle - angle_margin < goal_angle < forward_angle + angle_margin:
+        goal_angle = bot_commands.checkYOLOandUltrasonic()['goal']['angle']
+        bot_commands.rotateBot(ball_angle)
+    
+    # move to goal
+    goal_distance = bot_commands.checkYOLOandUltrasonic()['goal']['distance']
+    dist_threshold = 5
+    while goal_distance < dist_threshold:
+        goal_distance = bot_commands.checkYOLOandUltrasonic()['goal']['distance']
+        bot_commands.driveBot(goal_distance)
+    
+    # tell the robot to back up and turn around (set up to perform the ball process again)
+    bot_commands.driveBot(-10)
+    # Destroy all the nodes
 
-    minimal_publisher = CommandPublisher()
-
-    rclpy.spin(minimal_publisher)
-
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
-    minimal_publisher.destroy_node()
     rclpy.shutdown()
 
 
