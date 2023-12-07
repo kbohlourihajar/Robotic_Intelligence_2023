@@ -30,16 +30,11 @@ class ImageSubscriber(Node):
             cv2.imshow("image", cv2_img)
             cv2.waitKey(1)
             # Predict using the YOLO model
-            self.results = self.model.predict(cv2_img)
+            results = self.model.predict(cv2_img)
 
-            for result in self.results:
+            for result in results:
                 print(type(result.boxes.cls))
                 print(result.boxes.xywh)
-
-    # waits the input time or until a callback is triggered and returns the latest yolo results
-    def process_latest_img(self, time=1):
-        rclpy.spin_once(self, timeout_sec=time)
-        return self.results
 
 def main(args=None):
     rclpy.init(args=args)

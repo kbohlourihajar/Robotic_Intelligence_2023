@@ -16,25 +16,15 @@ if __name__ == '__main__':
     goalRelativeAngle = None
 
     while running:
-        ballCoords = {
-            'TL' : None,
-            'TR' : None,
-            'BL' : None,
-            'BR' : None       
-        } # bounding box
-        goalCoords = {
-            'TL' : None,
-            'TR' : None,
-            'BL' : None,
-            'BR' : None 
-        } # ditto
-        bot.commandToSearch(ballCoords, goalCoords)
-        if bot.hasItem(ballCoords): # sees ball
+        ballCoords = {} # bounding box
+        goalCoords = {} # ditto
+        locations = bot.search()
+        if locations['ball'] != None: # sees ball
             print('found ball')            
-            ballSpot = bot.getPosFromCoords(ballCoords)
-            if bot.hasItem(goalCoords): # sees goal
+            ballSpot = locations['ball']
+            if locations['goal'] != None: # sees goal
                 print('and goal')
-                goalSpot = bot.getPosFromCoords(goalCoords)
+                goalSpot = locations['goal']
                 if goalSpot['distance'] < 500 and ballSpot['distance'] == 0: # posesses ball in goal
                     print('bot has delivered the package')
                     bot.sendMessage({
@@ -69,9 +59,9 @@ if __name__ == '__main__':
                     print('failed at sees ball not goal')
                     
 
-        elif bot.hasItem(goalCoords): # sees goal not ball
+        elif locations['goal'] != None: # sees goal not ball
             print('found goal')
-            goalRelativeAngle = bot.getPosFromCoords(goalCoords)['angle']
+            goalRelativeAngle = locations['goal']['angle']
             bot.rotateBot(120)
             goalRelativeAngle += 120
         else: # sees niether

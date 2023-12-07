@@ -8,6 +8,7 @@ class StateSubscriber(Node):
 
     def __init__(self):
         super().__init__('robot_state_subscriber')
+        self.state = 'not ready'
         self.subscription = self.create_subscription(
             String,
             'state',
@@ -17,6 +18,10 @@ class StateSubscriber(Node):
 
     def listener_callback(self, msg):
         self.get_logger().info('I heard: "%s"' % msg.data)
+        self.state = msg.data
+
+    def getState(self):
+        return self.state
 
 
 def main(args=None):

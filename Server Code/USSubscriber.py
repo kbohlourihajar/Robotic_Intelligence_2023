@@ -8,6 +8,7 @@ class USSubscriber(Node):
 
     def __init__(self):
         super().__init__('ultrasonic_subscriber')
+        self.sensorFeedback = 420 # initialize it to a far away value that can be easily recognized for debugging
         self.subscription = self.create_subscription(
             String,
             'ultrasonic',
@@ -17,6 +18,10 @@ class USSubscriber(Node):
 
     def listener_callback(self, msg):
         self.get_logger().info('I heard: "%s"' % msg.data)
+        self.sensorFeedback = msg.data
+
+    def getFeedback(self):
+        return self.sensorFeedback
 
 
 def main(args=None):
