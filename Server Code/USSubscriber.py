@@ -11,13 +11,13 @@ class USSubscriber(Node):
         self.sensorFeedback = 420 # initialize it to a far away value that can be easily recognized for debugging
         self.subscription = self.create_subscription(
             String,
-            'ultrasonic',
+            '/ultrasonic',
             self.listener_callback,
-            10)
+            1)
         self.subscription  # prevent unused variable warning
 
     def listener_callback(self, msg):
-        self.get_logger().info('I heard: "%s"' % msg.data)
+        self.get_logger().info(f"I heard: {msg.data}")
         self.sensorFeedback = msg.data
 
     def getFeedback(self):

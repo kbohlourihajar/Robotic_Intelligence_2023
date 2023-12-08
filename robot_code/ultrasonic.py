@@ -5,11 +5,17 @@ GPIO.setwarnings(False)
 
 EchoPin = 18
 TrigPin = 16
+BuzzerPin = 32
 
 GPIO.setmode(GPIO.BOARD)
 
+GPIO.setup(BuzzerPin, GPIO.OUT)
 GPIO.setup(EchoPin, GPIO.IN)
 GPIO.setup(TrigPin, GPIO.OUT)
+
+p = GPIO.PWM(32, 440)
+p.start(50)
+
 
 def distance():
 	GPIO.output(TrigPin, GPIO.LOW)
@@ -37,4 +43,4 @@ def distance():
 if __name__ == '__main__':
 	while(True):
 		time.sleep(0.1)
-		print(distance())
+		p.ChangeFrequency(distance() * 15)

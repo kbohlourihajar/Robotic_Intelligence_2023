@@ -9,7 +9,7 @@ BLUEBALL_METER = 0.08107323944568634
 YELLOWBALL_METER = 0.08612402528524399
 
 
-model = YOLO("C:/Users/kpche/OneDrive/Desktop/cs5510/runs/detect/train8/weights/best.onnx")
+model = YOLO("best.onnx")
 
 def yoloView(frame):
     items = []

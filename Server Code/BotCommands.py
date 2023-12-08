@@ -15,6 +15,8 @@ class BotCommands:
         rclpy.init(args=None)
         self.camResolutionX = 640
         self.camResolutionY = 640
+        self.meters_per_sec = 0.56
+        self.degrees_per_sec = 45
 
         self.oneMeterDistanceInPixels = 100 # TODO: get the real measurement
         self.ballWidthMm = 65
@@ -64,7 +66,7 @@ class BotCommands:
             }
 
 
-        print('reply recieved, evaluating data')
+        print('reply received, evaluating data')
         angleMod = -36
         for i in range(3):
             self.sendMessage({
@@ -98,17 +100,13 @@ class BotCommands:
     def sendMessage(self, message):
         self.commandNode.publish_command(message)
 
-        time.sleep(.5)
-
-        while(self.stateNode.getState != 'ready'): # check if it's ready
-            rclpy.spin_once(self.stateNode)
-
+        time.sleep(0.5)
 
     def driveBot(self, dist):
         print('commanding bot to drive forward, waiting for reply')
         self.sendMessage({
             'command' : 'drive',
-            'amount' : dist
+            'amount' : dist / self.meters_per_sec
         })
         print('success')
 
@@ -116,7 +114,7 @@ class BotCommands:
         print('commanding bot to rotate, waiting for reply')
         self.sendMessage({
             'command' : 'rotate',
-            'amount' : angle
+            'amount' : angle / self.degrees_per_sec
         })
         print('success')
 

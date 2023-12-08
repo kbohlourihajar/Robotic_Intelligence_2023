@@ -3,6 +3,7 @@ import time
 import numpy as np
 import BotCommands
 
+angle_tolerance = 1
 
 if __name__ == '__main__':
     bot = BotCommands.BotCommands()
@@ -25,13 +26,13 @@ if __name__ == '__main__':
             if locations['goal'] != None: # sees goal
                 print('and goal')
                 goalSpot = locations['goal']
-                if goalSpot['distance'] < 500 and ballSpot['distance'] == 0: # posesses ball in goal
+                if goalSpot['distance'] < 0.5 and ballSpot['distance'] == 0: # posesses ball in goal
                     print('bot has delivered the package')
                     bot.sendMessage({
                         'command' : 'celebrate'
                     })
                     running = False
-                elif goalSpot['angle'] == 0 and ballSpot['angle'] == 0: # goal and ball are lined up, posess and not posessed
+                elif -angle_tolerance < goalSpot['angle'] < angle_tolerance and ballSpot['angle'] == 0: # goal and ball are lined up, posess and not posessed
                     bot.driveBot(goalSpot['distance'])
                 elif goalSpot['angle'] > 0 and ballSpot['distance'] == 0: # posesses ball outside of goal, not lined up
                     bot.rotateBot(goalSpot['angle'])
@@ -49,7 +50,7 @@ if __name__ == '__main__':
                     goalRelativeAngle = None
                 elif goalRelativeAngle == None and ballSpot['distance'] == 0: # has ball and hasn't seen goal
                     bot.rotateBot(160)
-                elif ballSpot['angle'] == 0 and ballSpot['distance'] != 0: # does not have ball, lined up
+                elif -angle_tolerance < ballSpot['angle'] < angle_tolerance and ballSpot['distance'] != 0: # does not have ball, lined up
                     bot.driveBot(ballSpot['distance'])
                 elif ballSpot['angle'] != 0 and ballSpot['distance'] != 0: # does not have ball, not lined up
                     bot.rotateBot(ballSpot['angle'])
