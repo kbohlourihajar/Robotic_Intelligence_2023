@@ -17,6 +17,7 @@ class ImageSubscriber(Node):
         self.subscription  # prevent unused variable warning
         self.bridge = CvBridge()
         self.results = []
+        self.model = YOLO("best.onnx")
 
     def listener_callback(self, msg):
         self.get_logger().info('Received image')
@@ -30,7 +31,7 @@ class ImageSubscriber(Node):
             cv2.imshow("image", cv2_img)
             cv2.waitKey(1)
             # Predict using the YOLO model
-            self.results = yolo.yoloView(cv2_img)
+            self.results = yolo.yoloView(cv2_img, self.model)
 
     # waits the input time or until a callback is triggered and returns the latest yolo results	
     def process_latest_img(self, time=1):	
