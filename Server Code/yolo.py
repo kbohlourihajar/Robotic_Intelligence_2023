@@ -9,13 +9,12 @@ BLUEBALL_METER = 0.08107323944568634
 YELLOWBALL_METER = 0.08612402528524399
 
 
-model = YOLO("best.onnx")
-
-def yoloView(frame):
+def yoloView(frame, model):
     items = []
     results = model.predict(frame)
 
     if not results:
+        #items.append({'distance': 0, 'x': 0, 'y': 0, 'type': 'none'})
         return items
     for i in range(len(results[0].boxes.cls)):
         items.append(getPos(results[0], i))
