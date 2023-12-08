@@ -97,8 +97,7 @@ class BotCommands:
     
     def sendMessage(self, message):
         self.commandNode.publish_command(message)
-
-        time.sleep(0.5)
+        time.sleep(1)
 
     def driveBot(self, dist):
         print('commanding bot to drive forward, waiting for reply')
@@ -106,6 +105,7 @@ class BotCommands:
             'command' : 'drive',
             'amount' : dist / self.meters_per_sec
         })
+        time.sleep(dist / self.meters_per_sec)
         print('success')
 
     def rotateBot(self, angle):
@@ -114,6 +114,7 @@ class BotCommands:
             'command' : 'rotate',
             'amount' : angle / self.degrees_per_sec
         })
+        time.sleep(angle / self.meters_per_sec)
         print('success')
 
     def search(self):
