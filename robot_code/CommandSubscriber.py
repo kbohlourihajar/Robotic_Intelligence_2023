@@ -11,7 +11,7 @@ import json
 class CommandSubscriber(Node):
     def __init__(self):
         super().__init__('command_listener')
-        self.subscription = self.create_subscription(String, '/command', self.listener_callback, 10)
+        self.subscription = self.create_subscription(String, '/command', self.listener_callback, 1)
         self.subscription  # prevent unused variable warning
         self.car = Car()
 
@@ -35,6 +35,7 @@ class CommandSubscriber(Node):
                 # or another way to tell the server to take the results from yolo
             self.car.set_servo(1, command['angle'])
             self.car.set_servo(2, 90)
+            time.sleep(0.5)
         elif command['command'] == 'ready':
             self.get_logger().info("My body is ready.")
 
