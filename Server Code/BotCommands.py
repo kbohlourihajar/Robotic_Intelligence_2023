@@ -97,7 +97,7 @@ class BotCommands:
     
     def sendMessage(self, message):
         self.commandNode.publish_command(message)
-        time.sleep(1.5)
+        time.sleep(1)
 
     def driveBot(self, dist):
         print('commanding bot to drive forward, waiting for reply')

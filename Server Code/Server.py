@@ -2,12 +2,14 @@ import cv2 as cv
 import time
 import numpy as np
 import BotCommands
+import yolo
 
 angle_tolerance = 10
 
 if __name__ == '__main__':
     bot = BotCommands.BotCommands()
     
+    time.sleep(5)
 
     running = True
 

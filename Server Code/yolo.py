@@ -8,8 +8,9 @@ CHESSBOARD_METER = 0.18050996959209442
 BLUEBALL_METER = 0.08107323944568634
 YELLOWBALL_METER = 0.08612402528524399
 
+model = YOLO("best.onnx")
 
-def yoloView(frame, model):
+def yoloView(frame):
     items = []
     results = model.predict(frame)
 
