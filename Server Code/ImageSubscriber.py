@@ -13,9 +13,10 @@ class ImageSubscriber(Node):
             Image,
             '/image_raw',
             self.listener_callback,
-            10)
+            1)
         self.subscription  # prevent unused variable warning
         self.bridge = CvBridge()
+        self.results = []
 
     def listener_callback(self, msg):
         self.get_logger().info('Received image')
@@ -34,7 +35,7 @@ class ImageSubscriber(Node):
     # waits the input time or until a callback is triggered and returns the latest yolo results	
     def process_latest_img(self, time=1):	
         rclpy.spin_once(self, timeout_sec=time)	
-        return self.results	
+        return self.results
 
 
 def main(args=None):

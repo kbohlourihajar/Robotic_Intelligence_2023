@@ -66,7 +66,7 @@ class BotCommands:
 
 
         print('reply received, evaluating data')
-        angleMod = -36
+        angleMod = 36
         for i in range(3):
             self.sendMessage({
                 'command' : 'search',
@@ -78,26 +78,26 @@ class BotCommands:
                 if j['type'] == 'blueBall':
                     if posDict['ball'] == None:
                         angle = copy.deepcopy(j['x_angle'])
-                        angle += angleMod
+                        angle -= angleMod
                         posDict['ball'] = {
                             'distance' : j['distance'],
                             'angle' : angle
                         }
                 elif j['type'] == 'chessBoard':
-                    angle = j['x_angle']
-                    angle += angleMod
+                    angle = copy.deepcopy(j['x_angle'])
+                    angle -= angleMod
                     posDict['goal'] = {
                         'distance' : j['distance'],
                         'angle' : angle
                     }
-            angleMod += 36
+            angleMod -= 36
 
         return posDict
     
     
     def sendMessage(self, message):
         self.commandNode.publish_command(message)
-        time.sleep(1)
+        time.sleep(1.5)
 
     def driveBot(self, dist):
         print('commanding bot to drive forward, waiting for reply')
@@ -109,12 +109,12 @@ class BotCommands:
         print('success')
 
     def rotateBot(self, angle):
-        print('commanding bot to rotate, waiting for reply')
+        print(f"commanding bot to rotate to {angle}, waiting for reply")
         self.sendMessage({
             'command' : 'rotate',
             'amount' : angle / self.degrees_per_sec
         })
-        time.sleep(angle / self.meters_per_sec)
+        time.sleep(abs(angle / self.degrees_per_sec))
         print('success')
 
     def search(self):

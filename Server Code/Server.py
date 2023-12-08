@@ -3,7 +3,7 @@ import time
 import numpy as np
 import BotCommands
 
-angle_tolerance = 1
+angle_tolerance = 10
 
 if __name__ == '__main__':
     bot = BotCommands.BotCommands()
@@ -23,7 +23,7 @@ if __name__ == '__main__':
             if locations['goal'] != None: # sees goal
                 print('and goal')
                 goalSpot = locations['goal']
-                if goalSpot['distance'] < 0.5 and ballSpot['distance'] == 0: # posesses ball in goal
+                if goalSpot['distance'] < 0.35 and ballSpot['distance'] == 0: # posesses ball in goal
                     print('bot has delivered the package')
                     bot.sendMessage({
                         'command' : 'celebrate'
@@ -62,7 +62,7 @@ if __name__ == '__main__':
             goalRelativeAngle = locations['goal']['angle']
             bot.rotateBot(120)
             goalRelativeAngle += 120
-        else: # sees niether
+        else: # sees neither
             print('found nothing')
             bot.rotateBot(120) # spin around if nothing found
 
