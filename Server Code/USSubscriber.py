@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from std_msgs.msg import Float64
 
 
 class USSubscriber(Node):
@@ -10,7 +10,7 @@ class USSubscriber(Node):
         super().__init__('ultrasonic_subscriber')
         self.sensorFeedback = 420 # initialize it to a far away value that can be easily recognized for debugging
         self.subscription = self.create_subscription(
-            String,
+            Float64,
             '/ultrasonic',
             self.listener_callback,
             1)

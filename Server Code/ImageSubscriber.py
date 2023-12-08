@@ -4,7 +4,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import cv2
 import time
-from ultralytics import YOLO
+import yolo
 
 class ImageSubscriber(Node):
     def __init__(self):
@@ -16,7 +16,6 @@ class ImageSubscriber(Node):
             10)
         self.subscription  # prevent unused variable warning
         self.bridge = CvBridge()
-        self.model = YOLO("best.onnx")
 
     def listener_callback(self, msg):
         self.get_logger().info('Received image')
@@ -30,11 +29,7 @@ class ImageSubscriber(Node):
             cv2.imshow("image", cv2_img)
             cv2.waitKey(1)
             # Predict using the YOLO model
-            self.results = self.model.predict(cv2_img)
-
-            for result in self.results:
-                print(type(result.boxes.cls))
-                print(result.boxes.xywh)
+            self.results = yolo.yoloView(cv2_img)
 
     # waits the input time or until a callback is triggered and returns the latest yolo results	
     def process_latest_img(self, time=1):	

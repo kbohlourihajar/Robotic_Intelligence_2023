@@ -70,11 +70,10 @@ class BotCommands:
         for i in range(3):
             self.sendMessage({
                 'command' : 'search',
-                'angle' : 180 + angleMod
+                'angle' : 90 + angleMod
             })
         
             listOfItems = self.imageNode.process_latest_img()
-
             for j in listOfItems:
                 if j['type'] == 'blueBall':
                     if posDict['ball'] == None:
