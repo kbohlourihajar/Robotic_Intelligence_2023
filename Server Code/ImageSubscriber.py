@@ -13,7 +13,7 @@ class ImageSubscriber(Node):
             Image,
             '/image_raw',
             self.listener_callback,
-            1)
+            10)
         self.subscription  # prevent unused variable warning
         self.bridge = CvBridge()
         self.results = []

@@ -83,7 +83,7 @@ class BotCommands:
                             'distance' : j['distance'],
                             'angle' : angle
                         }
-                elif j['type'] == 'chessBoard':
+                elif j['type'] == 'yellowBall':
                     angle = copy.deepcopy(j['x_angle'])
                     angle -= angleMod
                     posDict['goal'] = {
@@ -97,7 +97,7 @@ class BotCommands:
     
     def sendMessage(self, message):
         self.commandNode.publish_command(message)
-        time.sleep(1)
+        time.sleep(2)
 
     def driveBot(self, dist):
         print('commanding bot to drive forward, waiting for reply')

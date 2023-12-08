@@ -33,7 +33,7 @@ def getPos(result, index):
     if(result.boxes.cls[index].item() == 1):
         return {'distance': CHESSBOARD_METER/min(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'chessBoard', 'confidence': result.boxes.conf[index].item()}
     if(result.boxes.cls[index].item() == 2):
-        return {'distance': YELLOWBALL_METER/min(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'yellowBall', 'confidence': result.boxes.conf[index].item()}
+        return {'distance': YELLOWBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'yellowBall', 'confidence': result.boxes.conf[index].item()}
     else:
         return {'distance': -1, 'x': -1, 'y': -1, 'type': 'none'}
 
