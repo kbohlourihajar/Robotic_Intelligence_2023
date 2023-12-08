@@ -8,6 +8,7 @@ import USSubscriber
 import StateSubscriber
 import os
 import yolo
+import copy
 
 class BotCommands:
     def __init__(self):        
@@ -76,7 +77,7 @@ class BotCommands:
             for j in listOfItems:
                 if j['type'] == 'blueBall':
                     if posDict['ball'] == None:
-                        angle = j['x_angle']
+                        angle = copy.deepcopy(j['x_angle'])
                         angle += angleMod
                         posDict['ball'] = {
                             'distance' : j['distance'],
