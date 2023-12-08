@@ -73,20 +73,20 @@ class BotCommands:
         
             listOfItems = self.imageNode.process_latest_img()
 
-            for i in listOfItems:
-                if i['type'] == 'blueBall':
+            for j in listOfItems:
+                if j['type'] == 'blueBall':
                     if posDict['ball'] == None:
-                        angle = i['x_angle']
+                        angle = j['x_angle']
                         angle += angleMod
                         posDict['ball'] = {
-                            'distance' : i['distance'],
+                            'distance' : j['distance'],
                             'angle' : angle
                         }
-                elif i['type'] == 'chessBoard':
-                    angle = i['x_angle']
+                elif j['type'] == 'chessBoard':
+                    angle = j['x_angle']
                     angle += angleMod
                     posDict['goal'] = {
-                        'distance' : i['distance'],
+                        'distance' : j['distance'],
                         'angle' : angle
                     }
             angleMod += 36
