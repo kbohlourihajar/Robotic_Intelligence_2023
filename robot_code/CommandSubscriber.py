@@ -34,7 +34,7 @@ class CommandSubscriber(Node):
             # this part either needs an image pub/sub intermediary on the robot
                 # or another way to tell the server to take the results from yolo
             self.car.set_servo(1, command['angle'])
-            self.car.set_servo(2, 90)
+            self.car.set_servo(2, 100)
             time.sleep(0.5)
         elif command['command'] == 'ready':
             self.get_logger().info("My body is ready.")
