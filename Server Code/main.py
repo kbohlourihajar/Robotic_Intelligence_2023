@@ -12,7 +12,7 @@ def main(args=None):
             # CommandPublisher
             # ImageSubscriber
             # UltrasonicSubscriber
-            # 
+            # run Server.py
         # Robot:
             # Camera -> $ ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[640,480]"
             # CommandSubscriber

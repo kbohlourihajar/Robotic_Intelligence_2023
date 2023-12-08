@@ -16,6 +16,7 @@ GPIO.setup(TrigPin, GPIO.OUT)
 p = GPIO.PWM(32, 440)
 p.start(50)
 
+theremin = False
 
 def distance():
 	GPIO.output(TrigPin, GPIO.LOW)
@@ -41,6 +42,6 @@ def distance():
 	return ((t2 - t1) * 340 / 2) * 100
 
 if __name__ == '__main__':
-	while(True):
+	while(theremin):
 		time.sleep(0.1)
 		p.ChangeFrequency(distance() * 15)

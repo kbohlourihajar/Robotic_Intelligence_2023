@@ -26,7 +26,6 @@ class BotCommands:
         self.commandNode = CommandPublisher.CommandPublisher()
         self.imageNode = ImageSubscriber.ImageSubscriber()
         self.ultrasonicNode = USSubscriber.USSubscriber()
-        self.stateNode = StateSubscriber.StateSubscriber()
 
 
 
