@@ -23,7 +23,7 @@ class CommandPublisher(Node):
 
     def publish_command(self, command):
         msg = String()
-        msg.data = command
+        msg.data = json.dumps(command)
         self.publisher_.publish(msg)
         self.i += 1
 
