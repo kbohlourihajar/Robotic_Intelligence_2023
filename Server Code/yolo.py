@@ -29,11 +29,11 @@ def getPos(result, index):
     w = result.boxes.xywhn[index][2].item()
     h = result.boxes.xywhn[index][3].item()
     if(result.boxes.cls[index].item() == 0):
-        return {'distance': BLUEBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'blueBall'}
+        return {'distance': BLUEBALL_METER/(w+h)/2, 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'blueBall', 'confidence': result.boxes.conf[index].item()}
     if(result.boxes.cls[index].item() == 1):
-        return {'distance': CHESSBOARD_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'chessBoard'}
+        return {'distance': CHESSBOARD_METER/(w+h)/2, 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'chessBoard', 'confidence': result.boxes.conf[index].item()}
     if(result.boxes.cls[index].item() == 2):
-        return {'distance': YELLOWBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'yellowBall'}
+        return {'distance': YELLOWBALL_METER/(w+h)/2), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'yellowBall', 'confidence': result.boxes.conf[index].item()}
     else:
         return {'distance': -1, 'x': -1, 'y': -1, 'type': 'none'}
 
@@ -44,8 +44,10 @@ def y_angle(y):
     return (y-0.5)*Vertical_FOV
 
 
+
+
 if __name__ == "__main__":
-    #im_cv = cv2.imread("meter.png")
+    #im_cv = cv2.imread("measure_test.png")
     #im_rgb = cv2.cvtColor(im_cv, cv2.COLOR_BGR2RGB)
     #scale_info = yoloView(im_rgb)
     scale_info = yoloView("y.jpg")
