@@ -9,7 +9,7 @@ class UltrasonicPublisher(Node):
 
     def __init__(self):
         super().__init__('ultrasonic_publisher')
-        self.publisher_ = self.create_publisher(Float64, '/command', 1)
+        self.publisher_ = self.create_publisher(Float64, '/ultrasonic', 1)
 
     def publish_ultrasonic(self):
         msg = Float64()
