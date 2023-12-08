@@ -13,10 +13,11 @@ GPIO.setup(BuzzerPin, GPIO.OUT)
 GPIO.setup(EchoPin, GPIO.IN)
 GPIO.setup(TrigPin, GPIO.OUT)
 
-p = GPIO.PWM(32, 440)
-p.start(50)
-
 theremin = False
+
+if theremin:
+	p = GPIO.PWM(32, 440)
+	p.start(50)
 
 def distance():
 	GPIO.output(TrigPin, GPIO.LOW)

@@ -13,7 +13,7 @@ class UltrasonicPublisher(Node):
 
     def publish_ultrasonic(self):
         msg = Float64()
-        msg.data = ultrasonic.distance()
+        msg.data = float(ultrasonic.distance())
         self.publisher_.publish(msg)
 
 
