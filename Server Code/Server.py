@@ -11,9 +11,6 @@ if __name__ == '__main__':
 
     running = True
 
-    bot.waitForRobot()
-    bot.sendConnectionSuccess()
-
     goalRelativeAngle = None
 
     while running:
@@ -32,14 +29,14 @@ if __name__ == '__main__':
                         'command' : 'celebrate'
                     })
                     running = False
-                elif -angle_tolerance < goalSpot['angle'] < angle_tolerance and ballSpot['angle'] == 0: # goal and ball are lined up, posess and not posessed
+                elif np.abs(goalSpot['angle']) < angle_tolerance and np.abs(ballSpot['angle']) < angle_tolerance: # goal and ball are lined up, posess and not posessed
                     bot.driveBot(goalSpot['distance'])
                 elif goalSpot['angle'] > 0 and ballSpot['distance'] == 0: # posesses ball outside of goal, not lined up
                     bot.rotateBot(goalSpot['angle'])
-                elif ballSpot['distance'] > 0 and ballSpot['angle'] == 0: # does not posess ball, outside goal, lined up
+                elif ballSpot['distance'] > 0 and np.abs(ballSpot['angle']) < angle_tolerance: # does not posess ball, outside goal, lined up
                     goalRelativeAngle = goalSpot['angle']
                     bot.driveBot(ballSpot['distance'])
-                elif ballSpot['angle'] > 0: # does not possess ball, outside goal, not lined up
+                elif np.abs(ballSpot['angle']) > angle_tolerance: # does not possess ball, outside goal, not lined up
                     goalRelativeAngle = goalSpot['angle']
                     bot.rotateBot(ballSpot['angle'])
                 else: # if I missed a scenario
@@ -50,9 +47,9 @@ if __name__ == '__main__':
                     goalRelativeAngle = None
                 elif goalRelativeAngle == None and ballSpot['distance'] == 0: # has ball and hasn't seen goal
                     bot.rotateBot(160)
-                elif -angle_tolerance < ballSpot['angle'] < angle_tolerance and ballSpot['distance'] != 0: # does not have ball, lined up
+                elif np.abs(ballSpot['angle']) < angle_tolerance and ballSpot['distance'] != 0: # does not have ball, lined up
                     bot.driveBot(ballSpot['distance'])
-                elif ballSpot['angle'] != 0 and ballSpot['distance'] != 0: # does not have ball, not lined up
+                elif np.abs(ballSpot['angle']) > angle_tolerance and ballSpot['distance'] != 0: # does not have ball, not lined up
                     bot.rotateBot(ballSpot['angle'])
                     if goalRelativeAngle != None:
                         goalRelativeAngle += ballSpot['angle']
