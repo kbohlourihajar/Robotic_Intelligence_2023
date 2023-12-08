@@ -25,16 +25,23 @@ The robot uses ROS2 publishers and subscribers for communication between the var
 
     - Computer to process images and command robot (referred to in this document as the server).
      
-        - Due to the nature of ROS2, if the onboard robot computer is strong enough it can theoretically run the processing on the robot without modification, though attempting to do so on a PI 3 may require you to fill out ATF Form 1 for construction of a destructive device.
+        - Due to the nature of ROS2, if the onboard robot computer is strong enough it can theoretically run the processing on the robot without modification, though attempting to do so on a PI 3 may require you to fill out ATF Form 1 for construction of a destructive device. Just don't try it.
 
     - Mobile hotspot or some form of LAN device.
 
         - Not required if running onboard the robot.
 
+- **Dependencies**
 
- - ROS2 must be installed on both the robot and the server machine.
+    - ROS2 must be installed on both the robot and the server machine.
 
- - YOLOv8 dependencies must be installed on the server machine.
+    - YOLOv8 dependencies must be installed on the server machine. The only python package that we needed to install at the time is ultralytics.
+
+- **Files**
+    
+    - *Server Code* folder must be on the server machine. It contains all of the command logic, the publisher/subscribers, YOLO logic, and the trained YOLO model.
+
+    - *robot_code* folder must be on the robot. It contains the robot command interface and the publisher/subscriber nodes.
 
  **Prepping the Robot**
 
@@ -47,6 +54,8 @@ The robot uses ROS2 publishers and subscribers for communication between the var
  - Start up the Image Publisher, the Ultrasonic Publisher, and the Command Subscriber.
     
     - We did this by connecting a monitor and keyboard to the robot and started each in a separate terminal.
+
+    - The Image Publisher is a built in node, the command is 
  
  - On the server, run Server.py.
 
