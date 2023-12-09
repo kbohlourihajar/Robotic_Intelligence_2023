@@ -8,6 +8,29 @@ source the install
 
 `source install/setup.bash`
 
+# Exports
+Add these to your bashrc or export them per terminal used.
+
+`export TURTLEBOT3_MODEL=waffle_pi`
+`export ROS_DOMAIN_ID=30`
+
+# Dependencies
+If you are not using Humble for your ros2 distro you can replace the word humble with your distro name.
+
+`sudo apt install ros-humble-slam-toolbox`
+
+`sudo apt install ros-humble-teleop-twist-keyboard`
+
+`sudo apt install ros-humble-navigation2`
+
+`sudo apt install ros-humble-nav2-bringup`
+
+### Turtlebot3
+`sudo apt install ros-humble-turtlebot3-bringup`
+
+`sudo apt install ros-humble-v4l2-camera`
+
+
 # Making the map
 ```ros2 launch slam_toolbox online_async_launch.py```
 
