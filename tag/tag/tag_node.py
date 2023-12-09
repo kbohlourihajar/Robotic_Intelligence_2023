@@ -9,7 +9,7 @@ from std_msgs.msg import Bool
 
 class Tag(Node):
     def __init__(self):
-        super().__init__('camera_processing_node')
+        super().__init__('tag_node')
         self.person_angle = None
         self.patrol_publisher = self.create_publisher(
             Bool,
