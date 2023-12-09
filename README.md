@@ -1,3 +1,13 @@
+This assumes to have ros2 already running on your computer, we used Humble.
+
+Clone this report and move tag into your ros2 workspaces src directory. Then build it from your workspace:
+
+`colcon build --symlink-install --packages-select tag`
+
+source the install
+
+`source install/setup.bash`
+
 # Making the map
 ```ros2 launch slam_toolbox online_async_launch.py```
 
