@@ -1,4 +1,4 @@
-## Making the map
+# Making the map
 ```ros2 launch slam_toolbox online_async_launch.py```
 
 `rviz2`
@@ -7,12 +7,12 @@
 
 `ros2 run nav2_map_server map_saver_cli -f ~/map`
 
-## Turtlebot3 Waffle Pi
+# Turtlebot3 Waffle Pi
 `ros2 launch turtlebot3_bringup robot.launch.py`
 
 `ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[640,480]"`
 
-## Laptop/Other Computer
+# Laptop/Other Computer
 `ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True autostart:=True map:=/{PATH_TO_MAP}/map.yaml`
 
 `ros2 run rviz2 rviz2 -d $(ros2 pkg prefix nav2_bringup)/share/nav2_bringup/rviz/nav2_default_view.rviz`
