@@ -48,7 +48,7 @@ class Patrol(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    # set these based on your map
+    # set these based on the points you got from your map
     patrol_points = [
             (-0.7012170553207397, 1.0324088335037231, 0.101959228515625),
             (-0.42683398723602295, -1.1036051511764526, -0.001373291015625),
