@@ -4,9 +4,9 @@ import time
 
 Horizontal_FOV = 52.8844060937 #degrees (0.9230070092945282) Radidans
 Vertical_FOV = 41.2941180858 #degrees (0.7207183223027605) Radians
-CHESSBOARD_METER = 0.18050996959209442
-BLUEBALL_METER = 0.08107323944568634
-YELLOWBALL_METER = 0.08612402528524399
+CHESSBOARD_METER = 0.18050996959209442 # Percent camera coverage of the chessboard at 1 meter
+BLUEBALL_METER = 0.08107323944568634   # Percent camera coverage of the blueBall at 1 meter
+YELLOWBALL_METER = 0.08612402528524399 # Percent camera coverage of the yellowBall at 1 meter
 
 #Yolo model location
 model = YOLO("best.onnx")
