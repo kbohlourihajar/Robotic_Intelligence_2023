@@ -17,34 +17,13 @@ class BotCommands:
         self.meters_per_sec = 0.56
         self.degrees_per_sec = 45
 
-        self.oneMeterDistanceInPixels = 100 # TODO: get the real measurement
-        self.ballWidthMm = 65
-        self.ballWidth1MeterInPixels = 50 # TODO: get the real measurement
-        self.angleAtEdgeOfCameraFOV = 45 # TODO: get the real measurement
-        self.acceptableCenterAngle = 10 # TODO: get the real measurement
         self.commandNode = CommandPublisher.CommandPublisher()
         self.imageNode = ImageSubscriber.ImageSubscriber()
         self.ultrasonicNode = USSubscriber.USSubscriber()
 
 
-
-
-
-    # unfinished things
-    def waitForRobot(self):
-        print('waiting for robot')
-
-        self.sendMessage({
-            'command' : 'ready'
-        })
-
-
-
-
-    # possibly finished things
     def checkYOLOandUltrasonic(self):
         # {'distance': BLUEBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'blueBall'}
-        
 
         posDict = {
             'ball' : None,
@@ -52,6 +31,7 @@ class BotCommands:
         }
 
         # check ultrasonic
+        print('evaluating ultrasonic')
         readings = []
         for i in range(10):
             rclpy.spin_once(self.ultrasonicNode)
@@ -64,7 +44,7 @@ class BotCommands:
             }
 
 
-        print('reply received, evaluating data')
+        print('scanning')
         angleMod = 36
         for i in range(3):
             self.sendMessage({
@@ -99,25 +79,23 @@ class BotCommands:
         time.sleep(2)
 
     def driveBot(self, dist):
-        print('commanding bot to drive forward, waiting for reply')
+        print('commanding bot to drive forward')
         self.sendMessage({
             'command' : 'drive',
             'amount' : dist / self.meters_per_sec
         })
         time.sleep(dist / self.meters_per_sec)
-        print('success')
 
     def rotateBot(self, angle):
-        print(f"commanding bot to rotate to {angle}, waiting for reply")
+        print(f"commanding bot to rotate to {angle}")
         self.sendMessage({
             'command' : 'rotate',
             'amount' : angle / self.degrees_per_sec
         })
         time.sleep(abs(angle / self.degrees_per_sec))
-        print('success')
 
     def search(self):
-        print('commanding robot to search, waiting for reply')
+        print('commanding robot to search')
         locations = self.checkYOLOandUltrasonic()
         print('data processed')
 
