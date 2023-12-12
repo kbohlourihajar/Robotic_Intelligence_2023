@@ -32,6 +32,7 @@ class BotCommands:
         }
 
         # check ultrasonic
+        print('evaluating ultrasonic')
         readings = []
         for i in range(10):
             rclpy.spin_once(self.ultrasonicNode)
@@ -44,7 +45,7 @@ class BotCommands:
             }
 
 
-        print('reply received, evaluating data')
+        print('scanning')
         angleMod = 36
         for i in range(3):
             self.sendMessage({
@@ -79,25 +80,23 @@ class BotCommands:
         time.sleep(2)
 
     def driveBot(self, dist):
-        print('commanding bot to drive forward, waiting for reply')
+        print('commanding bot to drive forward')
         self.sendMessage({
             'command' : 'drive',
             'amount' : dist / self.meters_per_sec
         })
         time.sleep(dist / self.meters_per_sec)
-        print('success')
 
     def rotateBot(self, angle):
-        print(f"commanding bot to rotate to {angle}, waiting for reply")
+        print(f"commanding bot to rotate to {angle}")
         self.sendMessage({
             'command' : 'rotate',
             'amount' : angle / self.degrees_per_sec
         })
         time.sleep(abs(angle / self.degrees_per_sec))
-        print('success')
 
     def search(self):
-        print('commanding robot to search, waiting for reply')
+        print('commanding robot to search')
         locations = self.checkYOLOandUltrasonic()
         print('data processed')
 
