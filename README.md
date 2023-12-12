@@ -56,6 +56,8 @@ The robot uses ROS2 publishers and subscribers for communication between the var
     - We did this by connecting a monitor and keyboard to the robot and started each in a separate terminal.
 
     - The Image Publisher is a built in node, the command is 
+    
+        `ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[320,240]"`
  
  - On the server, run Server.py.
 
