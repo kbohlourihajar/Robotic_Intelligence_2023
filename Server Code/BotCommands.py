@@ -18,34 +18,13 @@ class BotCommands:
         self.meters_per_sec = 0.56
         self.degrees_per_sec = 45
 
-        self.oneMeterDistanceInPixels = 100 # TODO: get the real measurement
-        self.ballWidthMm = 65
-        self.ballWidth1MeterInPixels = 50 # TODO: get the real measurement
-        self.angleAtEdgeOfCameraFOV = 45 # TODO: get the real measurement
-        self.acceptableCenterAngle = 10 # TODO: get the real measurement
         self.commandNode = CommandPublisher.CommandPublisher()
         self.imageNode = ImageSubscriber.ImageSubscriber()
         self.ultrasonicNode = USSubscriber.USSubscriber()
 
 
-
-
-
-    # unfinished things
-    def waitForRobot(self):
-        print('waiting for robot')
-
-        self.sendMessage({
-            'command' : 'ready'
-        })
-
-
-
-
-    # possibly finished things
     def checkYOLOandUltrasonic(self):
         # {'distance': BLUEBALL_METER/max(w, h), 'x_angle': x_angle(x), 'y_angle': y_angle(y), 'type': 'blueBall'}
-        
 
         posDict = {
             'ball' : None,
