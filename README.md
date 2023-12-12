@@ -1,6 +1,12 @@
 # Overview
 This code is to get a the turtlebot3 to play tag. It can patrol around a map you make/provide and looks for a person using its camera to detect them. Once it sees a person it will stop and display tag with the image of who it tagged on the device. To resume the game click 'q' to quit the image and the robot will resume playing tag.
 
+### Demo Patrol in Simulation
+![Patrol Simulation](assets/patrol_sim.gif)
+
+### Demo Tag
+![Tag](assets/tag_demo.gif)
+
 # How To
 You must be on the same local network. You can check with `hostname -I`.
 
