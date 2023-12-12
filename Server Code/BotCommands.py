@@ -5,7 +5,6 @@ import numpy as np
 import CommandPublisher
 import ImageSubscriber
 import USSubscriber
-import StateSubscriber
 import os
 import yolo
 import copy
