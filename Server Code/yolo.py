@@ -8,21 +8,24 @@ CHESSBOARD_METER = 0.18050996959209442
 BLUEBALL_METER = 0.08107323944568634
 YELLOWBALL_METER = 0.08612402528524399
 
+#Yolo model location
 model = YOLO("best.onnx")
 
+
+#Function to pass CV2 Image
+#Returns a list of dictionaries with every detected object, its classification, and its relative location
 def yoloView(frame):
     items = []
     results = model.predict(frame)
 
     if not results:
-        #items.append({'distance': 0, 'x': 0, 'y': 0, 'type': 'none'})
         return items
     for i in range(len(results[0].boxes.cls)):
         items.append(getPos(results[0], i))
 
-
     return items
 
+#internal function to calculate information about a detected object
 def getPos(result, index):
     x = result.boxes.xywhn[index][0].item()
     y = result.boxes.xywhn[index][1].item()
@@ -37,6 +40,7 @@ def getPos(result, index):
     else:
         return {'distance': -1, 'x': -1, 'y': -1, 'type': 'none'}
 
+#Functions to calculate angle of object based on its position seen by the camera 
 def x_angle(x):
     return (x-0.5)*Horizontal_FOV
 
@@ -45,31 +49,18 @@ def y_angle(y):
 
 
 
-
+#For Model Testing reads an image from a file and returns the calculated information
 if __name__ == "__main__":
-    #im_cv = cv2.imread("measure_test.png")
-    #im_rgb = cv2.cvtColor(im_cv, cv2.COLOR_BGR2RGB)
-    #scale_info = yoloView(im_rgb)
     scale_info = yoloView("y.jpg")
     for item in scale_info:
         print(item)
 
-
 '''
+0.0 -> 1.0
   X-------->
 Y    
 |
 |
 |
 V
-'''
-
-'''
-#XYWH
-results = model.predict('y.jpg')
-for result in results:
-    print(result.boxes.cls[0].item())
-    print(result.boxes.xywh[0][1].item())
-    print(result.boxes.cls)
-    print(result.boxes.xywh)
 '''
