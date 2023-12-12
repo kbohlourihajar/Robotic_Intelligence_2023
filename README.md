@@ -37,6 +37,14 @@ The robot uses ROS2 publishers and subscribers for communication between the var
 
     - YOLOv8 dependencies must be installed on the server machine. The only python package that we needed to install at the time is ultralytics.
 
+    - Install all dependencies included in the following tutorials (provided by Taylor Anderson):
+        - [Installing Ubuntu 22.04](https://gaseoustortoise.notion.site/Installation-1104c26e40e8493ab1883744caf942dd)
+        - [Installing and using ROS2](https://gaseoustortoise.notion.site/Workspace-Packages-and-Nodes-06a1857c0f0340ed8f1c33de1366e8b0)
+        - [Using the Camera](https://gaseoustortoise.notion.site/Raspberry-Pi-Camera-bc33c733eeb4417cbd5e3db027a3a429)
+    
+    - Other python packages that are required but may not be installed on the robot or server include: smbus, cv2, numpy, copy, and RPi.GPIO
+
+
 - **Files**
     
     - *Server Code* folder must be on the server machine. It contains all of the command logic, the publisher/subscribers, YOLO logic, and the trained YOLO model.
