@@ -1,2 +1,2 @@
 - best.omnx\
-The YOLOv8 Model used
+The YOLOv8 Model we made
