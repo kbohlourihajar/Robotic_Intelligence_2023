@@ -66,6 +66,12 @@ The robot uses ROS2 publishers and subscribers for communication between the var
     - The Image Publisher is a built in node, the command is 
     
         `ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[320,240]"`
+      
+    - The Ultrasonic Publisher and the Command Subscriber are started by running their .py files:
+
+        `python3 USPublisher.py`
+
+        `python3 CommandSubscriber.py`
  
  - On the server, run Server.py.
 
